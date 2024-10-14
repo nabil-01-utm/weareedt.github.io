@@ -4,15 +4,17 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Perlin Noise X Vertex Shader</title>
+    <title>Realtime API 3D Visualizer</title>
     <style>
-        body {
-            margin: 0;
-        }
-    </style>
+      body {
+          margin: 0;
+          overflow: hidden;
+      }
+      
+  </style>
 </head>
 <body>
-    <script id="vertexshader" type="vertex">
+   <!-- <script id="vertexshader" type="vertex">
       uniform float u_time;
 
       vec3 mod289(vec3 x)
@@ -110,6 +112,8 @@
       }
 
       uniform float u_frequency;
+      // Use u_frequency to control the vertex displacement
+      float displacement = (u_frequency / 10.0) * (noise / 10.0);
 
       void main() {
           float noise = 3.0 * pnoise(position + u_time, vec3(10.0));
@@ -117,15 +121,10 @@
           vec3 newPosition = position + normal * displacement;
           gl_Position = projectionMatrix * modelViewMatrix * vec4(newPosition, 1.0);
       }
-    </script>
-    <script id="fragmentshader" type="fragment">
-        uniform float u_red;
-        uniform float u_blue;
-        uniform float u_green;
-        void main() {
-            gl_FragColor = vec4(vec3(u_red, u_green, u_blue), 1. );
-        }
-    </script>
-    <script src="./js/scripts.js" type="module"></script>
+    </script>-->
+    <!-- <button id="speakBtn">Press mic to talk</button>
+    <script src="https://cdn.jsdelivr.net/npm/@openai/websockets"></script> -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/110/three.min.js"></script>
+    <script type="module" src="js/visualizer.js"></script>
 </body>
 </html>
