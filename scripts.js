@@ -3,12 +3,13 @@ const scene = new THREE.Scene();
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 const renderer = new THREE.WebGLRenderer({ antialias: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
+renderer.setPixelRatio(window.devicePixelRatio);  // Optimize for device pixel ratio
 document.body.appendChild(renderer.domElement);  // Attach renderer to the HTML
 
 camera.position.z = 5;  // Move the camera back so we can see the object
 
 // === Create a Smaller Icosahedron ===
-const geometry = new THREE.IcosahedronGeometry(1, 8);  // Make it smaller and simpler for visibility
+const geometry = new THREE.IcosahedronGeometry(1, 2);  // Reduce detail level for better performance
 const material = new THREE.MeshBasicMaterial({
     color: 0x00ff00, // Bright green color for visibility
     wireframe: true  // Enable wireframe mode to see the object clearly
@@ -68,19 +69,20 @@ function updateColor() {
 
 // === Animation Loop ===
 function animate() {
-    requestAnimationFrame(animate);
+    setTimeout(() => {  // Limit frame rate to 30 FPS
+        requestAnimationFrame(animate);
 
-    // Get frequency data from the audio analyzer
-    const dataArray = analyser.getFrequencyData();
+        // Get frequency data from the audio analyzer
+        const dataArray = analyser.getFrequencyData();
 
-    // Use the frequency data to scale the sphere (for a basic visual effect)
-    const averageFrequency = analyser.getAverageFrequency();
-    const scale = 1 + averageFrequency / 128;  // Scale factor based on average frequency
-    sphere.scale.set(scale, scale, scale);  // Apply the scaling
+        // Use the frequency data to scale the sphere (for a basic visual effect)
+        const averageFrequency = analyser.getAverageFrequency();
+        const scale = 1 + averageFrequency / 128;  // Scale factor based on average frequency
+        sphere.scale.set(scale, scale, scale);  // Apply the scaling
 
-
-    // Render the scene
-    renderer.render(scene, camera);
+        // Render the scene
+        renderer.render(scene, camera);
+    }, 1000 / 30);  // 30 FPS
 }
 
 // Start the animation loop
